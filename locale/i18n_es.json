@@ -5,4 +5,11 @@
   "nameLabel": "Nombre completo",
   "nameRequiredText": "Nombre completo requerido",
   "nameInvalidText": "Nombre completo inválido",
+  "emailLabel": "Email",
+  "emailRequiredText": "Email requerido",
+  "emailInvalidText": "Email inválido",
+  "passwordLabel": "Password",
+  "passwordRequiredText": "Password requerido",
+  "passwordInvalidText": "Password inválido",
+  "continueButtonText": "Registrar"
 }

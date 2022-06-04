@@ -150,8 +150,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       ),
     );
   }
-
-  }
 }
 
 class _NameText extends HookConsumerWidget {
