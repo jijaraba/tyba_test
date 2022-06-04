@@ -1,0 +1,8 @@
+{
+  "common": {
+    "app_name": "Tyba Restaurant"
+  },
+  "nameLabel": "Nombre completo",
+  "nameRequiredText": "Nombre completo requerido",
+  "nameInvalidText": "Nombre completo inválido",
+}
