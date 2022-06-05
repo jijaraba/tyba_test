@@ -26,6 +26,9 @@ class RestaurantServiceImpl implements RestaurantService {
         '?lat=${lan}&lon=${lng}&view=Unified&relatedPois=off&key=${_apiKey}',
       );
       if (response.statusCode == 200) {
+        print("XXXXXX");
+        print(RestaurantModel.fromJson((response.data['results'] as List)[0]));
+        print("XXXXXX");
         return (response.data['results'] as List)
             .map((x) => RestaurantModel.fromJson(x))
             .toList();
