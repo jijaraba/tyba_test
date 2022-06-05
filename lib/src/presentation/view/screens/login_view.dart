@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tyba_frotend_engineer_test/dependencies.dart';
+import 'package:tyba_frotend_engineer_test/src/core/forms/login/login_forn_state_notifier.dart';
 import 'package:tyba_frotend_engineer_test/src/core/forms/user/generic_user_form.dart';
 import 'package:tyba_frotend_engineer_test/src/core/forms/user/states/register_forn_state_notifier.dart';
 import 'package:tyba_frotend_engineer_test/src/core/presentation/widgets/custom_button.dart';
@@ -11,19 +12,19 @@ import 'package:tyba_frotend_engineer_test/src/core/presentation/widgets/custom_
 import 'package:tyba_frotend_engineer_test/src/core/res/res.dart';
 import 'package:tyba_frotend_engineer_test/src/core/utils/common_extensions.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/view/widgets/custom_loading.dart';
-import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/register/register_state.dart';
+import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/login/login_state.dart';
 
-class RegisterView extends ConsumerStatefulWidget {
-  const RegisterView({Key? key, this.uid, this.email}) : super(key: key);
+class LoginView extends ConsumerStatefulWidget {
+  const LoginView({Key? key, this.uid, this.email}) : super(key: key);
 
   final String? uid;
   final String? email;
 
   @override
-  ConsumerState<RegisterView> createState() => _RegisterViewState();
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends ConsumerState<RegisterView> {
+class _LoginViewState extends ConsumerState<LoginView> {
   @override
   void initState() {
     super.initState();
@@ -32,18 +33,13 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
-
     final localization = context.localizations;
-
-    final isLoadingRegister = ref.watch(
-      registerViewModelPod.select((s) => s.isLoading),
-    );
+    final loginState = ref.watch(loginViewModelPod);
 
     ref.listen(
-      registerViewModelPod,
-      (_, RegisterState state) => _onChangeState(state),
+      loginViewModelPod,
+      (_, LoginState state) => _onChangeState(context, state),
     );
 
     return Stack(
@@ -81,10 +77,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         ),
                         const Padding(
                           padding: EdgeInsets.only(bottom: 16),
-                          child: _NameText(),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 16),
                           child: _EmailText(),
                         ),
                         const Padding(
@@ -99,11 +91,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         alignment: Alignment.center,
                         child: _SubmitButton(
                           onSubmit: () => ref
-                              .read(registerViewModelPod.notifier)
-                              .registerUser(
-                                ref.read(registerNotifierPod),
-                                uid: widget.uid,
-                                email: widget.email,
+                              .read(loginViewModelPod.notifier)
+                              .signInUserPassword(
+                                ref.read(loginNotifierPod),
                               ),
                         ),
                       ),
@@ -112,9 +102,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: CustomButton(
-                          onPressed: () => context.pushNamed('login'),
+                          onPressed: () => context.pushNamed('register'),
                           text: localization
-                              .text('loginButtonText')
+                              .text('continueButtonText')
                               .toUpperCase(),
                           isTextButton: true,
                           textColor: UIColors.textGrey,
@@ -128,7 +118,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
             ),
           ),
         ),
-        if (isLoadingRegister)
+        if (loginState.isLoading)
           CustomLoading(
             circularLoadingColor: colorScheme.primary,
           ),
@@ -136,55 +126,13 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     );
   }
 
-  void _onChangeState(RegisterState state) {
+  void _onChangeState(BuildContext context, LoginState state) {
     if (state.isSuccess) context.go('/home');
-
-    if (state.isError) {
-      final localization = context.localizations;
-
-      if (state.errorType == ErrorType.userExists) {
-        _showSnackBar(localization.text('existingUserError'));
-      } else {
-        _showSnackBar(localization.text('genericError'));
-      }
-    }
-  }
-
-  void _showSnackBar(String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          title,
-          textAlign: TextAlign.center,
-        ),
-        elevation: 5,
-      ),
-    );
-  }
-}
-
-class _NameText extends HookConsumerWidget {
-  const _NameText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     final localization = context.localizations;
+    final message = localization.loginErrorMessage(state.erroType);
 
-    final nameText = ref.watch(registerNotifierPod.select((form) => form.name));
-    final nameTextController = useTextEditingController(text: nameText.value);
-
-    return CustomTextField(
-      textController: nameTextController,
-      hint: localization.text('nameLabel'),
-      requiredMessage: localization.text('nameRequiredText'),
-      errorText: nameText.error == NameValidation.invalid
-          ? localization.text('nameInvalidText')
-          : null,
-      inputType: TextInputType.name,
-      action: TextInputAction.next,
-      onChange: (val) => ref.read(registerNotifierPod.notifier).changeName(val),
-      isRequired: true,
-      textColor: UIColors.textGrey,
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }
@@ -197,7 +145,7 @@ class _EmailText extends HookConsumerWidget {
     final localization = context.localizations;
 
     final emailText = ref.watch(
-      registerNotifierPod.select((form) => form.email),
+      loginNotifierPod.select((form) => form.email),
     );
     final emailTextController = useTextEditingController(text: emailText.value);
 
@@ -210,7 +158,7 @@ class _EmailText extends HookConsumerWidget {
           : null,
       inputType: TextInputType.emailAddress,
       action: TextInputAction.next,
-      onChange: (v) => ref.read(registerNotifierPod.notifier).changeEmail(v),
+      onChange: (v) => ref.read(loginNotifierPod.notifier).changeEmail(v),
       isRequired: true,
     );
   }
@@ -224,7 +172,7 @@ class _PasswordText extends HookConsumerWidget {
     final localization = context.localizations;
 
     final passwordText = ref.watch(
-      registerNotifierPod.select((form) => form.password),
+      loginNotifierPod.select((form) => form.password),
     );
     final passwordTextController = useTextEditingController(
       text: passwordText.value,
@@ -237,7 +185,7 @@ class _PasswordText extends HookConsumerWidget {
       errorText: passwordText.error == PasswordValidation.invalid
           ? localization.text('passwordInvalidText')
           : null,
-      onChange: (v) => ref.read(registerNotifierPod.notifier).changePassword(v),
+      onChange: (v) => ref.read(loginNotifierPod.notifier).changePassword(v),
       isRequired: true,
       hasPassword: true,
     );
@@ -251,18 +199,16 @@ class _SubmitButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = context.theme;
-    final colorScheme = theme.colorScheme;
+    final colorScheme = context.theme.colorScheme;
+    final loginFormState = ref.watch(loginNotifierPod);
 
-    final registerFormState = ref.watch(registerNotifierPod);
-
-    print(registerFormState.status);
+    print(loginFormState.status);
 
     return CustomButton(
-      text: context.localizations.text('continueButtonText').toUpperCase(),
-      onPressed: registerFormState.status == FormzStatus.valid ? onSubmit : null,
+      text: context.localizations.text('loginButtonText').toUpperCase(),
+      onPressed: loginFormState.status == FormzStatus.valid ? onSubmit : null,
       paddingHorizontal: 100,
-      textColor: registerFormState.status == FormzStatus.valid
+      textColor: loginFormState.status == FormzStatus.valid
           ? null
           : colorScheme.onSurface,
     );

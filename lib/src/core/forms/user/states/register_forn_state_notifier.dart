@@ -7,25 +7,21 @@ class RegisterFormState with FormzMixin {
     this.email = const EmailForm.pure(),
     this.name = const NameForm.pure(),
     this.password = const PasswordForm.pure(),
-    this.phone = const PhoneForm.pure(),
   });
 
   final EmailForm email;
   final NameForm name;
   final PasswordForm password;
-  final PhoneForm phone;
 
   RegisterFormState copyWith({
     EmailForm? email,
     NameForm? name,
     PasswordForm? password,
-    PhoneForm? phone,
   }) =>
       RegisterFormState(
         email: email ?? this.email,
         name: name ?? this.name,
         password: password ?? this.password,
-        phone: phone ?? this.phone,
       );
 
   @override
@@ -33,7 +29,6 @@ class RegisterFormState with FormzMixin {
     email,
     name,
     password,
-    phone,
   ];
 }
 
@@ -51,12 +46,6 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   void changePassword(String value) {
     state = state.copyWith(password: PasswordForm.dirty(value));
   }
-
-
-  void changePhone(String value) {
-    state = state.copyWith(phone: PhoneForm.dirty(value));
-  }
-
 }
 
 final registerNotifierPod =

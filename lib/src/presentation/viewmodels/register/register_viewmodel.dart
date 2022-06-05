@@ -39,7 +39,6 @@ class RegisterViewModel extends StateNotifier<RegisterState> {
             uid: signupResult?.uid ?? uid!,
             email: signupResult?.email ?? email!,
             name: register.name.value,
-            phoneNumber: register.phone.value,
           ),
         );
       }

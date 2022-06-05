@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tyba_frotend_engineer_test/src/core/res/res.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -160,7 +161,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       focusNode: _customFocusNode,
       textInputAction: widget.action,
       obscureText: _isVisiblePassword,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: UIColors.textGrey),
       textCapitalization: widget.capitalization,
       onChanged: _onChange,
       onSubmitted: widget.onSubmitted,

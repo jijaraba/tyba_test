@@ -11,9 +11,9 @@ final ThemeData materialTheme = ThemeData(
   primaryColor: UIColors.white,
   colorScheme: ColorScheme.light(
     primary: UIColors.green100,
-    onPrimary: UIColors.green100,
+    onPrimary: UIColors.white,
     secondary: UIColors.green100,
-    onSecondary: UIColors.white,
+    onSecondary: UIColors.green100,
   ),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: UIColors.white,

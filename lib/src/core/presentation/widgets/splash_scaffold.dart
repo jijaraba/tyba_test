@@ -37,7 +37,7 @@ class SplashBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: UIColors.white,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -45,7 +45,7 @@ class SplashBackground extends StatelessWidget {
             image: AssetImage(image),
             fit: BoxFit.cover,
             alignment: Alignment.centerLeft,
-            color: UIColors.black.withOpacity(0.6),
+            color: UIColors.white,
             colorBlendMode: BlendMode.luminosity,
           ),
           child,

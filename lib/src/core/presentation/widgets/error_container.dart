@@ -50,17 +50,6 @@ class ErrorContainer extends ConsumerWidget {
                     style: textNormal.copyWith(color: UIColors.black),
                   ),
                 VSpacing(20),
-                CustomButton(
-                  paddingHorizontal: 90,
-                  onPressed: () {
-                    // ref.read(searchFilterPod.notifier).state = '';
-                    // ref.read(characterNotifierPod.notifier).changeSearch('');
-                    // ref.read(genderFilterPod.notifier).state = CharacterSearchDataFormGender.all;
-                    // ref.read(pageFilterPod.notifier).state = 1;
-                  },
-                  text: localization.text('common.removeFilters'),
-                  textColor: UIColors.white,
-                )
               ],
             ),
           ),

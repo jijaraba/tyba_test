@@ -11,5 +11,9 @@
   "passwordLabel": "Password",
   "passwordRequiredText": "Password requerido",
   "passwordInvalidText": "Password inválido",
-  "continueButtonText": "Registrar"
+  "continueButtonText": "Registrar",
+  "loginButtonText": "Login",
+  "logoutText": "Logout",
+  "genericError": "Error",
+  "genericErrorSubtitle": "Recargar de nuevo"
 }

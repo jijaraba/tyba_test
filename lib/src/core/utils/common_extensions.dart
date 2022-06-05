@@ -17,7 +17,7 @@ extension StringX on String {
   DateTime get stringToDateTime => DateFormat('dd/MM/yyyy hh:mm a').parse(this);
 
   bool get validateEmail => RegExp(
-    r'^[a-zA-Z0-9.a-zA-Z0-9.!#$%&’*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
+    r'^[a-zA-Z\d.a-zA-Z\d.!#$%&’*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+',
   ).hasMatch(this);
 
   static const passwordRegexString =
@@ -25,12 +25,12 @@ extension StringX on String {
 
   bool get validatePassword => RegExp(passwordRegexString).hasMatch(this);
 
-  bool get validatePhone => RegExp(r'^[0-9]+$').hasMatch(this);
+  bool get validatePhone => RegExp(r'^\d+$').hasMatch(this);
 
   bool get validateStrings =>
-      RegExp(r'^(?!\s*$)[a-zA-Z-À-ÿ- ]{1,}$').hasMatch(this);
+      RegExp(r'^(?!\s*$)[a-zA-Z-À-ÿ- ]+$').hasMatch(this);
 
-  bool get validateNumber => RegExp(r'^[0-9]+$').hasMatch(this);
+  bool get validateNumber => RegExp(r'^\d+$').hasMatch(this);
 
   Color toColor() {
     final buffer = StringBuffer();

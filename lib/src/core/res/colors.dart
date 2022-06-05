@@ -2,8 +2,8 @@ part of core.presentation.res;
 
 abstract class UIColors {
   static const Color white = Color(0xFFFFFFFF);
-  static const Color green100 = Color(0xFF12555F);
-  static const Color green = Color(0xFFB2DF28);
+  static const Color green100 = Color(0xFF00E9CC);
+  static const Color green200 = Color(0xFF00E9CC);
   static const Color darkBlue = Color(0xFF081F32);
 
   static const Color black = Color(0xFF000000);
