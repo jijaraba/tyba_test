@@ -11,10 +11,13 @@
   "passwordLabel": "Password",
   "passwordRequiredText": "Password requerido",
   "passwordInvalidText": "Password inválido",
+  "searchLabel": "Search",
+  "searchRequiredText": "Campo requerido",
+  "searchInvalidText": "Campo inválido",
   "continueButtonText": "Registrar",
   "loginButtonText": "Login",
+  "searchButtonText": "Search",
   "logoutText": "Logout",
   "genericError": "Error",
   "genericErrorSubtitle": "Recargar de nuevo"
-
 }

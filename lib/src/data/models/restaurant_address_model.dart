@@ -11,5 +11,6 @@ class RestaurantAddressModel {
   factory RestaurantAddressModel.fromJson(Map<String, dynamic> json) =>
       _$RestaurantAddressModelFromJson(json);
 
+  @JsonKey(name: 'freeformAddress')
   final String freeformAddress;
 }

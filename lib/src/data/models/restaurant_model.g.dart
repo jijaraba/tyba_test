@@ -10,7 +10,11 @@ RestaurantModel _$RestaurantModelFromJson(Map<String, dynamic> json) =>
     RestaurantModel(
       id: json['id'] as String,
       score: (json['score'] as num).toDouble(),
-      poi: RestaurantInfoModel.fromJson(json['poi'] as Map<String, dynamic>),
-      address: RestaurantAddressModel.fromJson(
-          json['address'] as Map<String, dynamic>),
+      poi: json['poi'] == null
+          ? null
+          : RestaurantInfoModel.fromJson(json['poi'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : RestaurantAddressModel.fromJson(
+              json['address'] as Map<String, dynamic>),
     );

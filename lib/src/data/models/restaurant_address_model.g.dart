@@ -9,5 +9,5 @@ part of 'restaurant_address_model.dart';
 RestaurantAddressModel _$RestaurantAddressModelFromJson(
         Map<String, dynamic> json) =>
     RestaurantAddressModel(
-      freeformAddress: json['freeform_address'] as String,
+      freeformAddress: json['freeformAddress'] as String,
     );

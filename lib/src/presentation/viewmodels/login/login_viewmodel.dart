@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tyba_frotend_engineer_test/src/core/exceptions/data_exceptions.dart';
-import 'package:tyba_frotend_engineer_test/src/core/forms/login/login_forn_state_notifier.dart';
+import 'package:tyba_frotend_engineer_test/src/core/forms/login/login_form_state_notifier.dart';
 import 'package:tyba_frotend_engineer_test/src/domain/repositories/i_login_repository.dart';
 import 'package:tyba_frotend_engineer_test/src/domain/repositories/i_user_repository.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/login/login_state.dart';

@@ -24,6 +24,8 @@ import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/login/log
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/login/login_viewmodel.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/register/register_state.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/register/register_viewmodel.dart';
+import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/search/search_state.dart';
+import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/search/search_viewmodel.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/user/user_state.dart';
 import 'package:tyba_frotend_engineer_test/src/presentation/viewmodels/user/user_viewmodel.dart';
 
@@ -135,6 +137,15 @@ final userViewModelPod = StateNotifierProvider<UserViewModel, UserState>(
     preferencesRepositoryPod,
   ],
 );
+
+final searchViewModelPod = StateNotifierProvider<SearchViewModel, SearchState>(
+  (ref) => SearchViewModel(
+    ref.watch(restaurantRepositoryPod),
+    ref.watch(userRepositoryPod),
+  ),
+  dependencies: [restaurantRepositoryPod, userRepositoryPod],
+);
+
 //endregion
 
 //region App Config
